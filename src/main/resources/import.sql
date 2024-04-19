@@ -1,0 +1,1 @@
+insert into tamanho (largura,comprimento,profundidade) values(1,2,3);
