@@ -5,7 +5,9 @@ import java.util.List;
 import br.unitins.topicos1.dto.FornecedorDTO;
 import br.unitins.topicos1.dto.FornecedorResponseDTO;
 import br.unitins.topicos1.model.Fornecedor;
+import br.unitins.topicos1.repository.EnderecoRepository;
 import br.unitins.topicos1.repository.FornecedorRepository;
+import br.unitins.topicos1.repository.TelefoneRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -16,14 +18,18 @@ public class FornecedorServiceImpl implements FornecedorService {
 
     @Inject
     public FornecedorRepository fornecedorRepository;
+    @Inject
+    public EnderecoRepository enderecoRepository;
+    @Inject
+    public TelefoneRepository telefoneRepository;
 
     @Override
     @Transactional
     public FornecedorResponseDTO create(@Valid FornecedorDTO dto) {
         Fornecedor fornecedor = new Fornecedor();
         fornecedor.setNome(dto.nome());
-        fornecedor.setEndereco(dto.endereco());
-        fornecedor.setTelefone(dto.telefone());
+        fornecedor.setEndereco(enderecoRepository.findById(dto.id_endereco()));
+        fornecedor.setTelefone(telefoneRepository.findById(dto.id_telefone()));
         fornecedor.setEmail(dto.email());
 
 
@@ -37,8 +43,8 @@ public class FornecedorServiceImpl implements FornecedorService {
         Fornecedor fornecedorBanco =  fornecedorRepository.findById(id);
         
         fornecedorBanco.setNome(dto.nome());
-        fornecedorBanco.setEndereco(dto.endereco());
-        fornecedorBanco.setTelefone(dto.telefone());
+        fornecedorBanco.setEndereco(enderecoRepository.findById(dto.id_endereco()));
+        fornecedorBanco.setTelefone(telefoneRepository.findById(dto.id_telefone()));
         fornecedorBanco.setEmail(dto.email());
 
     }

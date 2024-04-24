@@ -1,7 +1,5 @@
 package br.unitins.topicos1.dto;
 
-import br.unitins.topicos1.model.Fornecedor;
-import br.unitins.topicos1.model.Tamanho;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -11,7 +9,7 @@ public record CanecaDTO (
     String nome, 
     String descricao, 
     float preco, 
-    Tamanho tamanho, 
+    Long id_tamanho, 
     Integer capacidade, 
     Integer id_material, 
-    Fornecedor fornecedor) { }
+    Long id_fornecedor) { }

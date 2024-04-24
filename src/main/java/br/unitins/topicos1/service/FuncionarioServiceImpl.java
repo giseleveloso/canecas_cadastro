@@ -5,7 +5,9 @@ import java.util.List;
 import br.unitins.topicos1.dto.FuncionarioDTO;
 import br.unitins.topicos1.dto.FuncionarioResponseDTO;
 import br.unitins.topicos1.model.Funcionario;
+import br.unitins.topicos1.repository.EnderecoRepository;
 import br.unitins.topicos1.repository.FuncionarioRepository;
+import br.unitins.topicos1.repository.TelefoneRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -16,6 +18,10 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
     @Inject
     public FuncionarioRepository funcionarioRepository;
+    @Inject
+    public EnderecoRepository enderecoRepository;
+    @Inject
+    public TelefoneRepository telefoneRepository;
 
     @Override
     @Transactional
@@ -23,8 +29,8 @@ public class FuncionarioServiceImpl implements FuncionarioService {
         Funcionario funcionario = new Funcionario();
         funcionario.setNome(dto.nome());
         funcionario.setCargo(dto.cargo());
-        funcionario.setEndereco(dto.endereco());
-        funcionario.setTelefone(dto.telefone());
+        funcionario.setEndereco(enderecoRepository.findById(dto.id_endereco()));
+        funcionario.setTelefone(telefoneRepository.findById(dto.id_telefone()));
         funcionario.setEmail(dto.email());
 
 
@@ -39,8 +45,8 @@ public class FuncionarioServiceImpl implements FuncionarioService {
         
         funcionarioBanco.setNome(dto.nome());
         funcionarioBanco.setCargo(dto.cargo());
-        funcionarioBanco.setEndereco(dto.endereco());
-        funcionarioBanco.setTelefone(dto.telefone());
+        funcionarioBanco.setEndereco(enderecoRepository.findById(dto.id_endereco()));
+        funcionarioBanco.setTelefone(telefoneRepository.findById(dto.id_telefone()));
         funcionarioBanco.setEmail(dto.email());
 
     }

@@ -7,6 +7,8 @@ import br.unitins.topicos1.dto.CanecaResponseDTO;
 import br.unitins.topicos1.model.Caneca;
 import br.unitins.topicos1.model.Material;
 import br.unitins.topicos1.repository.CanecaRepository;
+import br.unitins.topicos1.repository.FornecedorRepository;
+import br.unitins.topicos1.repository.TamanhoRepository;
 import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -18,20 +20,24 @@ public class CanecaServiceImpl implements CanecaService {
 
     @Inject
     public CanecaRepository canecaRepository;
+    @Inject
+    public TamanhoRepository tamanhoRepository;
+    @Inject
+    public FornecedorRepository fornecedorRepository;
 
     @Override
     @Transactional
     public CanecaResponseDTO create(@Valid CanecaDTO dto) {
         validarNomeCaneca(dto.nome());
-        
+
         Caneca caneca = new Caneca();
         caneca.setNome(dto.nome());
         caneca.setDescricao(dto.descricao());
         caneca.setPreco(dto.preco());
-        caneca.setTamanho(dto.tamanho());
+        caneca.setTamanho(tamanhoRepository.findById(dto.id_tamanho()));
         caneca.setCapacidade(dto.capacidade());
         caneca.setMaterial(Material.valueOf(dto.id_material()));
-        caneca.setFornecedor(dto.fornecedor());
+        caneca.setFornecedor(fornecedorRepository.findById(dto.id_fornecedor()));
 
         canecaRepository.persist(caneca);
         return CanecaResponseDTO.valueOf(caneca);
@@ -49,11 +55,12 @@ public class CanecaServiceImpl implements CanecaService {
         Caneca canecaBanco =  canecaRepository.findById(id);
         
         canecaBanco.setNome(dto.nome());
-        canecaBanco.setCapacidade(dto.capacidade());
         canecaBanco.setDescricao(dto.descricao());
         canecaBanco.setPreco(dto.preco());
+        canecaBanco.setTamanho(tamanhoRepository.findById(dto.id_tamanho()));
+        canecaBanco.setCapacidade(dto.capacidade());
         canecaBanco.setMaterial(Material.valueOf(dto.id_material()));
-        canecaBanco.setFornecedor(dto.fornecedor());
+        canecaBanco.setFornecedor(fornecedorRepository.findById(dto.id_fornecedor()));
     }
 
     @Override

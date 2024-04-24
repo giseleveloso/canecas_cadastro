@@ -1,17 +1,21 @@
 package br.unitins.topicos1.dto;
 
-import br.unitins.topicos1.model.Endereco;
 import br.unitins.topicos1.model.Funcionario;
-import br.unitins.topicos1.model.Telefone;
 
-public record FuncionarioResponseDTO (Long id,String nome,String cargo, Endereco endereco, Telefone telefone, String email) { 
+public record FuncionarioResponseDTO (
+    Long id,
+    String nome,
+    String cargo, 
+    EnderecoResponseDTO endereco, 
+    TelefoneResponseDTO telefone, 
+    String email) { 
     public static FuncionarioResponseDTO valueOf(Funcionario funcionario) {
-    return new  FuncionarioResponseDTO(
+    return new FuncionarioResponseDTO(
         funcionario.getId(),
         funcionario.getNome(),
         funcionario.getCargo(),
-        funcionario.getEndereco(),
-        funcionario.getTelefone(),
+        EnderecoResponseDTO.valueOf(funcionario.getEndereco()),
+        TelefoneResponseDTO.valueOf(funcionario.getTelefone()),
         funcionario.getEmail());
     }
 }
