@@ -1,4 +1,4 @@
-# psicologia-quarkus-tp1
+# canecas-quarkus-tp1
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
