@@ -13,4 +13,7 @@ public class ClienteRepository implements PanacheRepository<Cliente> {
         return find("UPPER(nome) LIKE ?1", "%"+ nome.toUpperCase() + "%").list();
     }
     
+    public Cliente findByNomeCompleto(String nome) {
+        return find("UPPER(nome) = ?1",  nome.toUpperCase() ).firstResult();
+    }
 }

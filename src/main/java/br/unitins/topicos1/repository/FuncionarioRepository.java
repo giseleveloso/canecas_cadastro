@@ -12,5 +12,9 @@ public class FuncionarioRepository implements PanacheRepository<Funcionario> {
     public List<Funcionario> findByNome(String nome) {
         return find("UPPER(nome) LIKE ?1", "%"+ nome.toUpperCase() + "%").list();
     }
+
+    public Funcionario findByNomeCompleto(String nome) {
+        return find("UPPER(nome) = ?1",  nome.toUpperCase() ).firstResult();
+    }
     
 }

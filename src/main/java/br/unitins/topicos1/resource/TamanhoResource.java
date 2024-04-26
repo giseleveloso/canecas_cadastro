@@ -4,6 +4,7 @@ package br.unitins.topicos1.resource;
 import br.unitins.topicos1.dto.TamanhoDTO;
 import br.unitins.topicos1.service.TamanhoService;
 import jakarta.inject.Inject;
+
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;

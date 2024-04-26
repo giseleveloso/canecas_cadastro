@@ -4,6 +4,7 @@ package br.unitins.topicos1.resource;
 import br.unitins.topicos1.dto.FornecedorDTO;
 import br.unitins.topicos1.service.FornecedorService;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -43,7 +44,7 @@ public class FornecedorResource {
     }
 
     @POST
-    public Response create(FornecedorDTO dto) {
+    public Response create(@Valid FornecedorDTO dto) {
         return Response.status(Status.CREATED).entity(fornecedorService.create(dto)).build();
     }
 

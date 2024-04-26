@@ -6,6 +6,7 @@ import br.unitins.topicos1.dto.EnderecoDTO;
 import br.unitins.topicos1.dto.EnderecoResponseDTO;
 import br.unitins.topicos1.model.Endereco;
 import br.unitins.topicos1.repository.EnderecoRepository;
+import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -20,6 +21,8 @@ public class EnderecoServiceImpl implements EnderecoService {
     @Override
     @Transactional
     public EnderecoResponseDTO create(@Valid EnderecoDTO dto) {
+        validarCEPEndereco(dto.cep());
+
         Endereco endereco = new Endereco();
         endereco.setCep(dto.cep());
         endereco.setNumero(dto.numero());
@@ -30,6 +33,12 @@ public class EnderecoServiceImpl implements EnderecoService {
         return EnderecoResponseDTO.valueOf(endereco);
     }
 
+    public void validarCEPEndereco(Integer cep) {
+        Endereco endereco = enderecoRepository.findByCEP(cep);
+        if (endereco != null)
+            throw  new ValidationException("cep", "O CEP '"+cep+"' já existe.");
+    }
+
     @Override
     @Transactional
     public void update(Long id, EnderecoDTO dto) {
@@ -38,8 +47,6 @@ public class EnderecoServiceImpl implements EnderecoService {
         enderecoBanco.setCep(dto.cep());
         enderecoBanco.setNumero(dto.numero());
         enderecoBanco.setRua(dto.rua());
-
-
     }
 
     @Override

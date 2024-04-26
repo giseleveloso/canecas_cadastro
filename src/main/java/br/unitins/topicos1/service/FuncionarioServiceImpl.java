@@ -8,6 +8,7 @@ import br.unitins.topicos1.model.Funcionario;
 import br.unitins.topicos1.repository.EnderecoRepository;
 import br.unitins.topicos1.repository.FuncionarioRepository;
 import br.unitins.topicos1.repository.TelefoneRepository;
+import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -26,6 +27,8 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     @Override
     @Transactional
     public FuncionarioResponseDTO create(@Valid FuncionarioDTO dto) {
+        validarNomeFuncionario(dto.nome());
+
         Funcionario funcionario = new Funcionario();
         funcionario.setNome(dto.nome());
         funcionario.setCargo(dto.cargo());
@@ -37,6 +40,13 @@ public class FuncionarioServiceImpl implements FuncionarioService {
         funcionarioRepository.persist(funcionario);
         return FuncionarioResponseDTO.valueOf(funcionario);
     }
+
+    public void validarNomeFuncionario(String nome) {
+        Funcionario funcionario = funcionarioRepository.findByNomeCompleto(nome);
+        if (funcionario != null)
+            throw  new ValidationException("nome", "O nome '"+nome+"' já existe.");
+    }
+
 
     @Override
     @Transactional

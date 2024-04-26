@@ -15,7 +15,7 @@ import static org.hamcrest.CoreMatchers.hasItem;
 public class TamanhoResourceTest {
     @Test
     public void createTest(){
-        TamanhoDTO dto = new TamanhoDTO(60.0f, 70.0f,80.0f);
+        TamanhoDTO dto = new TamanhoDTO(60.00f, 70.00f,80.00f);
         given()
         .contentType(MediaType.APPLICATION_JSON)
         .body(dto)
@@ -23,7 +23,7 @@ public class TamanhoResourceTest {
         .post("/tamanhos")
         .then()
         .statusCode(201)
-        .body("largura", is(60.0f));
+        .body("largura", is(60.00f));
     }
     @Test
     public void findAllTest(){

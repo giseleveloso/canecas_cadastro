@@ -6,6 +6,7 @@ import br.unitins.topicos1.dto.TamanhoDTO;
 import br.unitins.topicos1.dto.TamanhoResponseDTO;
 import br.unitins.topicos1.model.Tamanho;
 import br.unitins.topicos1.repository.TamanhoRepository;
+import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -20,6 +21,8 @@ public class TamanhoServiceImpl implements TamanhoService {
     @Override
     @Transactional
     public TamanhoResponseDTO create(@Valid TamanhoDTO dto) {
+        validarLarguraTamanho(dto.largura());
+
         Tamanho tamanho = new Tamanho();
         tamanho.setLargura(dto.largura());
         tamanho.setComprimento(dto.comprimento());
@@ -28,6 +31,12 @@ public class TamanhoServiceImpl implements TamanhoService {
 
         tamanhoRepository.persist(tamanho);
         return TamanhoResponseDTO.valueOf(tamanho);
+    }
+
+    public void validarLarguraTamanho(float largura) {
+        Tamanho tamanho = tamanhoRepository.findByLargura(largura);
+        if (tamanho != null)
+            throw  new ValidationException("largura", "A largura '"+largura+"' já existe.");
     }
 
     @Override

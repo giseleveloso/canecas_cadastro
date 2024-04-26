@@ -1,3 +1,9 @@
 package br.unitins.topicos1.dto;
 
-public record EnderecoDTO (Integer cep,String rua, Integer numero) { }
+import jakarta.validation.constraints.NotBlank;
+
+public record EnderecoDTO (
+    Integer cep,
+    @NotBlank(message = "A rua não pode ser nulo ou vazio")
+    String rua, 
+    Integer numero) { }

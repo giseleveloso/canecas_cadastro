@@ -8,6 +8,7 @@ import br.unitins.topicos1.model.Cliente;
 import br.unitins.topicos1.repository.ClienteRepository;
 import br.unitins.topicos1.repository.EnderecoRepository;
 import br.unitins.topicos1.repository.TelefoneRepository;
+import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -27,6 +28,8 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     @Transactional
     public ClienteResponseDTO create(@Valid ClienteDTO dto) {
+        validarNomeCliente(dto.nome());
+
         Cliente cliente = new Cliente();
         cliente.setNome(dto.nome());
         cliente.setEndereco(enderecoRepository.findById(dto.id_endereco()));
@@ -36,6 +39,12 @@ public class ClienteServiceImpl implements ClienteService {
 
         clienteRepository.persist(cliente);
         return ClienteResponseDTO.valueOf(cliente);
+    }
+
+    public void validarNomeCliente(String nome) {
+        Cliente cliente = clienteRepository.findByNomeCompleto(nome);
+        if (cliente != null)
+            throw  new ValidationException("nome", "O nome '"+nome+"' já existe.");
     }
 
     @Override

@@ -6,6 +6,7 @@ import br.unitins.topicos1.dto.TelefoneDTO;
 import br.unitins.topicos1.dto.TelefoneResponseDTO;
 import br.unitins.topicos1.model.Telefone;
 import br.unitins.topicos1.repository.TelefoneRepository;
+import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -20,6 +21,8 @@ public class TelefoneServiceImpl implements TelefoneService {
     @Override
     @Transactional
     public TelefoneResponseDTO create(@Valid TelefoneDTO dto) {
+        validarNumeroTelefone(dto.numero());
+
         Telefone telefone = new Telefone();
         telefone.setCodigoArea(dto.codigoArea());
         telefone.setNumero(dto.numero());
@@ -27,6 +30,12 @@ public class TelefoneServiceImpl implements TelefoneService {
 
         telefoneRepository.persist(telefone);
         return TelefoneResponseDTO.valueOf(telefone);
+    }
+
+    public void validarNumeroTelefone(String numero) {
+        Telefone telefone = telefoneRepository.findByNumero(numero);
+        if (telefone != null)
+            throw  new ValidationException("numero", "O número '"+numero+"' já existe.");
     }
 
     @Override

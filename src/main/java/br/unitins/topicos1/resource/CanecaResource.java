@@ -4,6 +4,7 @@ package br.unitins.topicos1.resource;
 import br.unitins.topicos1.dto.CanecaDTO;
 import br.unitins.topicos1.service.CanecaService;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -43,7 +44,7 @@ public class CanecaResource {
     }
 
     @POST
-    public Response create(CanecaDTO dto) {
+    public Response create(@Valid CanecaDTO dto) {
         return Response.status(Status.CREATED).entity(canecaService.create(dto)).build();
     }
 

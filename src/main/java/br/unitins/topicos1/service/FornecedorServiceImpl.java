@@ -8,6 +8,7 @@ import br.unitins.topicos1.model.Fornecedor;
 import br.unitins.topicos1.repository.EnderecoRepository;
 import br.unitins.topicos1.repository.FornecedorRepository;
 import br.unitins.topicos1.repository.TelefoneRepository;
+import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -26,6 +27,8 @@ public class FornecedorServiceImpl implements FornecedorService {
     @Override
     @Transactional
     public FornecedorResponseDTO create(@Valid FornecedorDTO dto) {
+        validarNomeFornecedor(dto.nome());
+
         Fornecedor fornecedor = new Fornecedor();
         fornecedor.setNome(dto.nome());
         fornecedor.setEndereco(enderecoRepository.findById(dto.id_endereco()));
@@ -35,6 +38,12 @@ public class FornecedorServiceImpl implements FornecedorService {
 
         fornecedorRepository.persist(fornecedor);
         return FornecedorResponseDTO.valueOf(fornecedor);
+    }
+
+    public void validarNomeFornecedor(String nome) {
+        Fornecedor fornecedor = fornecedorRepository.findByNomeCompleto(nome);
+        if (fornecedor != null)
+            throw  new ValidationException("nome", "O nome '"+nome+"' já existe.");
     }
 
     @Override
