@@ -20,7 +20,8 @@ insert into endereco (cep, rua, numero) values (66666777,'Rua Gisele',31);
 insert into endereco (cep, rua, numero) values (77777888,'Rua Marcela',20);
 
 
-insert into funcionario (nome,cargo,id_endereco,id_telefone,email) values ('João','Vendedor',1,1,'joao@gmail.com');
+insert into usuario (username,senha) values ('joao123',123)
+insert into funcionario (nome,cargo,id_endereco,id_telefone,email) values ('João','Vendedor',1,1,'joao@gmail.com',1);
 
 insert into cliente (nome,id_endereco,id_telefone,email) values ('Giovanna',2,2,'giovanna@gmail.com');
 insert into cliente (nome,id_endereco,id_telefone,email) values ('Lucas',4,4,'lucas@gmail.com');

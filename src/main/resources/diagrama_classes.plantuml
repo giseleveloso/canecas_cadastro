@@ -1,0 +1,136 @@
+@startuml Composicao
+
+
+class Caneca{
+  -id: Integer
+  -nome: String
+  -descricao: String
+  -preco: Float
+  -tamanho: Tamanho
+  -estilo: Estilo
+  -embalagem: Embalagem
+  -capcidade: Capacidade
+}
+
+class Personalizacao{
+  -cores: String
+  -elementosGraficos: String
+  -textos: String
+  -fonte: String
+  -add: String
+}
+
+enum Estilo{
+  -CLASSICO: Integer
+  -MODERNO: Integer
+  -VINTAGE: Integer
+}
+
+enum Embalagem{
+  -KRAFT: Integer
+  -BRANCA: Integer
+}
+
+class Tamanho{
+  -largura: Float
+  -comprimento: Float
+  -profundidade: Float
+}
+
+enum Material{
+  -PORCELANA: Integer
+  -POLIMERO: Integer
+  -VIDRO_COMUM: Integer
+  -VIDRO_JATEADO: Integer
+}
+
+enum Capacidade {
+  -300: Integer
+  -325: Integer
+  -180: Integer
+}
+
+class ItemPedido{
+  -caneca: Caneca
+  -quantidade: Integer
+  -idPedido: Integer
+}
+
+class Pedido{
+  -id: Integer
+  -itens: ItemPedido[]
+  -subtotal: Float
+  -status: Status
+}
+
+
+enum Status {
+  -PAGO: Integer
+  -EM_ATRASO: Integer
+}
+
+
+
+class Cliente{
+  -id: Integer
+  -nome: String
+  -endereco: Endereco
+  -pedido: Pedido[]
+  -telefone: Telefone
+  -email: String
+}
+
+class Funcionario{
+  -id: Integer
+  -nome: String
+  -cargo: String
+  -endereco: Endereco
+  -telefone: Telefone
+  -email: String
+}
+
+class Fornecedor{
+  -id: Integer
+  -nome: String
+  -endereco: Endereco
+  -telefone: Telefone
+  -email: String
+}
+
+class Endereco{
+  -cep: Integer
+  -rua: String
+  -numero: Integer
+}
+
+class Telefone{
+  -ddd: Integer
+  -numero: String
+}
+
+class Desconto{
+  -id: Integer
+  -descricao: String
+  -porcentagem: Integer
+}
+
+
+Caneca "1" --> "1" Fornecedor
+Caneca "1" --> "1" Personalizacao
+Personalizacao "*" --> "1" Embalagem
+Personalizacao "1" o--> "1" Estilo
+ItemPedido "1" *--> "1" Personalizacao
+Caneca "1" o--> "1" Tamanho
+Caneca "1" o--> "1" Material
+Caneca "1" o--> "1" Capacidade
+ItemPedido "*" *--> "1" Pedido
+Pedido "1" o--> "1" Status
+Pedido "1" --> "*" Desconto
+Cliente "1" --> "*" Pedido
+Cliente "1" *--> "1" Telefone
+Cliente "1" *--> "1" Endereco
+Funcionario "1" *--> "1" Telefone
+Funcionario "1" *--> "1" Endereco
+Fornecedor "1" *--> "1" Telefone
+Fornecedor "1" *--> "1" Endereco
+@enduml

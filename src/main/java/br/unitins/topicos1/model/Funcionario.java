@@ -15,6 +15,9 @@ public class Funcionario extends DefaultEntity{
     @JoinColumn(name = "id_telefone")
     private Telefone telefone;
     private String email;
+    @OneToOne
+    @JoinColumn(name = "id_usuario", unique = true)
+    private Usuario usuario;
 
     public String getNome() {
         return nome;
@@ -46,6 +49,12 @@ public class Funcionario extends DefaultEntity{
     public void setEmail(String email) {
         this.email = email;
     };
+    public Usuario getUsuario() {
+        return usuario;
+    }
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
     
 }

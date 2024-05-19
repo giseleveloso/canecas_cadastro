@@ -9,4 +9,6 @@ public record FuncionarioDTO (
     String cargo, 
     Long id_endereco, 
     Long id_telefone, 
-    String email) { }
+    String email,
+    String username,
+    String senha) { }
