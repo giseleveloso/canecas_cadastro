@@ -16,8 +16,9 @@ public class Cliente extends DefaultEntity {
     @JoinColumn(name = "id_telefone")
     private Telefone telefone;
     private String email;
-
-
+    @OneToOne
+    @JoinColumn(name = "id_usuario", unique = true)
+    private Usuario usuario;
    
 
     public Endereco getEndereco() {
@@ -50,6 +51,14 @@ public class Cliente extends DefaultEntity {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
 

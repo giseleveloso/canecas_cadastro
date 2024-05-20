@@ -9,8 +9,7 @@ public record FuncionarioResponseDTO (
     EnderecoResponseDTO endereco, 
     TelefoneResponseDTO telefone, 
     String email,
-    String username,
-    String senha) { 
+    UsuarioResponseDTO usuario) { 
     public static FuncionarioResponseDTO valueOf(Funcionario funcionario) {
     return new FuncionarioResponseDTO(
         funcionario.getId(),
@@ -19,7 +18,6 @@ public record FuncionarioResponseDTO (
         EnderecoResponseDTO.valueOf(funcionario.getEndereco()),
         TelefoneResponseDTO.valueOf(funcionario.getTelefone()),
         funcionario.getEmail(),
-        funcionario.getUsuario().getUsername(),
-        funcionario.getUsuario().getSenha());
+        UsuarioResponseDTO.valueOf(funcionario));
     }
 }

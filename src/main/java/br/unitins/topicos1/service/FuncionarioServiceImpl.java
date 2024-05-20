@@ -66,13 +66,13 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     @Override
     @Transactional
     public void update(Long id, FuncionarioDTO dto) {
-        // Funcionario funcionarioBanco =  funcionarioRepository.findById(id);
+         Funcionario funcionarioBanco =  funcionarioRepository.findById(id);
         
-        // funcionarioBanco.setNome(dto.nome());
-        // funcionarioBanco.setCargo(dto.cargo());
-        // funcionarioBanco.setEndereco(enderecoRepository.findById(dto.id_endereco()));
-        // funcionarioBanco.setTelefone(telefoneRepository.findById(dto.id_telefone()));
-        // funcionarioBanco.setEmail(dto.email());
+        funcionarioBanco.setNome(dto.nome());
+         funcionarioBanco.setCargo(dto.cargo());
+         funcionarioBanco.setEndereco(enderecoRepository.findById(dto.id_endereco()));
+         funcionarioBanco.setTelefone(telefoneRepository.findById(dto.id_telefone()));
+         funcionarioBanco.setEmail(dto.email());
 
     }
 

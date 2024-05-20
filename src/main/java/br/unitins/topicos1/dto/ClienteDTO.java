@@ -9,4 +9,6 @@ public record ClienteDTO (
     String nome,
     Long id_endereco, 
     Long id_telefone,
-     String email) { }
+    String email,
+    String username,
+    String senha) { }

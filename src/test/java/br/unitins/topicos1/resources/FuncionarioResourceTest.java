@@ -15,7 +15,7 @@ import static org.hamcrest.CoreMatchers.hasItem;
 public class FuncionarioResourceTest {
     @Test
     public void createTest(){
-        FuncionarioDTO dto = new FuncionarioDTO("Leandra","Vendedora",2L,2L,"leandra@gmail.com");
+        FuncionarioDTO dto = new FuncionarioDTO("Leandra","Vendedora",2L,2L,"leandra@gmail.com","lean","111");
         given()
         .contentType(MediaType.APPLICATION_JSON)
         .body(dto)
@@ -49,7 +49,7 @@ public class FuncionarioResourceTest {
 
     @Test
     public void updateTest(){
-        FuncionarioDTO dto = new FuncionarioDTO("Mário","Vendedora",1L,1L,"leandra@gmail.com");
+        FuncionarioDTO dto = new FuncionarioDTO("Mário","Vendedora",1L,1L,"leandra@gmail.com","marcinho","333");
         given()
         .contentType(MediaType.APPLICATION_JSON)
         .body(dto)
