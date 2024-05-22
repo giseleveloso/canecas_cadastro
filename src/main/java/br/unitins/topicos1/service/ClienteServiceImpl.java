@@ -101,7 +101,13 @@ public class ClienteServiceImpl implements ClienteService {
 
     public UsuarioResponseDTO login(String username, String senha) {
         Cliente cliente = clienteRepository.findByUsernameAndSenha(username, senha);
-        return UsuarioResponseDTO.valueOf(cliente);
+
+        if (cliente !=null){
+            return UsuarioResponseDTO.valueOf(cliente);
+        }else{
+            return null;
+        }
+
     }
 
 }

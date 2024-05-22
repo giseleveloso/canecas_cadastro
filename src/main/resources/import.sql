@@ -21,8 +21,8 @@ insert into endereco (cep, rua, numero) values (77777888,'Rua Marcela',20);
 
 
 
-INSERT INTO usuario (username, senha) VALUES ('joao123', '123');
-INSERT INTO usuario (username, senha) VALUES ('gigi', '123');
+INSERT INTO usuario (username, senha) VALUES ('joao123', 'TRwn0XU29Gwl2sagG00bvjrNJvLuYo+dbOBJ7R3xFpU4m/FAUc5q8OoGbVNwPF7F5713RaYkN4qyufNCDHm/mA==');
+INSERT INTO usuario (username, senha) VALUES ('gigi', 'TRwn0XU29Gwl2sagG00bvjrNJvLuYo+dbOBJ7R3xFpU4m/FAUc5q8OoGbVNwPF7F5713RaYkN4qyufNCDHm/mA==');
 
 insert into funcionario (nome,cargo,id_endereco,id_telefone,email,id_usuario) values ('João','Vendedor',1,1,'joao@gmail.com',1);
 

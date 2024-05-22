@@ -5,6 +5,7 @@ import br.unitins.topicos1.dto.FuncionarioDTO;
 import br.unitins.topicos1.dto.UsuarioResponseDTO;
 import br.unitins.topicos1.service.HashService;
 import br.unitins.topicos1.service.JwtService;
+import br.unitins.topicos1.service.ClienteService;
 import br.unitins.topicos1.service.FuncionarioService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -28,6 +29,9 @@ public class AuthResource {
     public FuncionarioService funcionarioService;
 
     @Inject
+    public ClienteService clienteService;
+
+    @Inject
     public HashService hashService;
 
     @Inject
@@ -35,20 +39,25 @@ public class AuthResource {
 
     @POST
     public Response login(AuthUsuarioDTO dto) {
-        String hash = hashService.getHashSenha(dto.senha());
+       String hash = hashService.getHashSenha(dto.senha());
 
         UsuarioResponseDTO usuario = null;
         // perfil 1 = funcionario
         if (dto.perfil() == 1) {
             usuario = funcionarioService.login(dto.username(), hash);
-        } else if (dto.perfil() == 2) { // paciente
-            return Response.status(Status.NOT_FOUND).build();
+        } else if (dto.perfil() == 2) { // cliente
+            usuario = clienteService.login(dto.username(), hash);
         } else {
             return Response.status(Status.NOT_FOUND).build();
         }
-        return Response.ok(usuario)
-            .header("Authorization", jwtService.generateJwt(usuario))
+
+        if (usuario!=null){
+            return Response.ok(usuario)
+            .header("Authorization", jwtService.generateJwt(dto, usuario))
             .build();
+        } else{
+            return Response.status(Status.NOT_FOUND).header("ERRO","Usuário ou senha incorretos").build();
+        }
     }
 
 }

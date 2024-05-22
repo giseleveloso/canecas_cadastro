@@ -3,6 +3,7 @@ package br.unitins.topicos1.resource;
 
 import br.unitins.topicos1.dto.TamanhoDTO;
 import br.unitins.topicos1.service.TamanhoService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 
 import jakarta.ws.rs.Consumes;
@@ -39,12 +40,14 @@ public class TamanhoResource {
 
 
     @POST
+    @RolesAllowed("Funcionario")
     public Response create(TamanhoDTO dto) {
         return Response.status(Status.CREATED).entity(tamanhoService.create(dto)).build();
     }
 
     @PUT
     @Path("/{id}")
+    @RolesAllowed("Funcionario")
     public Response update(@PathParam("id") Long id, TamanhoDTO dto) {
         tamanhoService.update(id, dto);
         return Response.status(Status.NO_CONTENT).build();
@@ -52,6 +55,7 @@ public class TamanhoResource {
 
     @DELETE
     @Path("/{id}")
+    @RolesAllowed("Funcionario")
     public Response delete(@PathParam("id") Long id) {
         tamanhoService.delete(id);
         return Response.status(Status.NO_CONTENT).build();

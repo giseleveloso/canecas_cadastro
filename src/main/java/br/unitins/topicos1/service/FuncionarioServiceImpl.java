@@ -104,7 +104,11 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
     public UsuarioResponseDTO login(String username, String senha) {
         Funcionario funcionario = funcionarioRepository.findByUsernameAndSenha(username, senha);
-        return UsuarioResponseDTO.valueOf(funcionario);
+        if (funcionario != null){
+            return UsuarioResponseDTO.valueOf(funcionario);
+        }else{
+            return null;
+        }
     }
 
 
