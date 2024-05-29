@@ -34,3 +34,5 @@ insert into fornecedor (nome,id_endereco,id_telefone,email) values ('Gisele',7,7
 
 insert into caneca (nome,descricao,preco,id_tamanho,capacidade,material,id_fornecedor) values ('Caneca coração','Alça de coração',40.50,1,320,1,1);
 insert into caneca (nome,descricao,preco,id_tamanho,capacidade,material,id_fornecedor) values ('Caneca Preta','Tarja branca',50.50,2,360,2,1);
+
+insert into itempedido (preco,quantidade,desconto,id_caneca) values (100,1,5,1);

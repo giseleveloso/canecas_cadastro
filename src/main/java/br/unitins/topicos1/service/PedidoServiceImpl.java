@@ -9,6 +9,7 @@ import br.unitins.topicos1.dto.PedidoDTO;
 import br.unitins.topicos1.dto.PedidoResponseDTO;
 import br.unitins.topicos1.model.ItemPedido;
 import br.unitins.topicos1.model.Pedido;
+import br.unitins.topicos1.repository.ClienteRepository;
 import br.unitins.topicos1.repository.PedidoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -21,8 +22,8 @@ public class PedidoServiceImpl implements PedidoService {
     @Inject
     public PedidoRepository pedidoRepository;
 
-    // @Inject
-    // public ClienteRepository clienteRepository;
+    @Inject
+    public ClienteRepository clienteRepository;
 
     @Override
     @Transactional
@@ -30,19 +31,19 @@ public class PedidoServiceImpl implements PedidoService {
 
         Pedido pedido = new Pedido();
         pedido.setData(LocalDateTime.now());
-       // pedido.setCliente(clienteRepository.findById(dto.idCliente()));
-        // total calculado
+        pedido.setCliente(clienteRepository.findById(dto.idCliente()));
+        pedido.setTotal(0d);
         List<ItemPedido> itens = new ArrayList<ItemPedido>();
 
         for (ItemPedidoDTO itemDTO : dto.itens()) {
             ItemPedido item = new ItemPedido();
-            //item.setConsulta(consultaRepository.findById(itemDTO.idConsulta()));
-            item.setDesconto(itemDTO.desconto());
-            item.setPreco(itemDTO.preco());
-            // adicionando na lista
-            itens.add(item);
-
-            // trabalhar o estoque de cada produto
+            if (item.getQuantidade()>= itemDTO.quantidade()) {
+                item.setDesconto(itemDTO.desconto());
+                item.setPreco(itemDTO.preco());
+                // adicionando na lista
+                itens.add(item);
+            // trabalhar o estoque de cada produto 
+             }
         }
 
         pedido.setItens(itens);
