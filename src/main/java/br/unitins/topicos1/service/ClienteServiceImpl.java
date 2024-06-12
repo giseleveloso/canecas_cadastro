@@ -4,6 +4,8 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.ClienteDTO;
 import br.unitins.topicos1.dto.ClienteResponseDTO;
+import br.unitins.topicos1.dto.ClienteUpdatePasswordDTO;
+import br.unitins.topicos1.dto.ClienteUpdateUsernameDTO;
 import br.unitins.topicos1.dto.UsuarioResponseDTO;
 import br.unitins.topicos1.model.Cliente;
 import br.unitins.topicos1.model.Usuario;
@@ -16,6 +18,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.NotFoundException;
 
 @ApplicationScoped
 public class ClienteServiceImpl implements ClienteService {
@@ -35,7 +39,8 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     @Transactional
     public ClienteResponseDTO create(@Valid ClienteDTO dto) {
-         Usuario usuario = new Usuario();
+        
+        Usuario usuario = new Usuario();
         usuario.setUsername(dto.username());
         usuario.setSenha(hashService.getHashSenha(dto.senha()));
 
@@ -73,6 +78,39 @@ public class ClienteServiceImpl implements ClienteService {
         clienteBanco.setEmail(dto.email());
 
     }
+
+    @Override
+    @Transactional
+    public void updatePassword(Long id, ClienteUpdatePasswordDTO dto) {
+
+        Cliente cliente = clienteRepository.findById(id);
+        String hashSenhaAntiga = hashService.getHashSenha(dto.oldPassword());
+
+        if (cliente != null) {
+            if (cliente.getUsuario().getSenha().equals(hashSenhaAntiga)) {
+                String hashNovaSenha = hashService.getHashSenha(dto.newPassword());
+                cliente.getUsuario().setSenha(hashNovaSenha);
+            } else {
+                throw new ValidationException("ERRO", "Senha antiga nao corresponde");
+            }
+        } else {
+            throw new NotFoundException();
+        }
+    }
+
+    @Override
+    @Transactional
+    public void updateUsername(Long id, ClienteUpdateUsernameDTO dto) {
+
+        Cliente cliente = clienteRepository.findById(id);
+
+        if (cliente != null) {
+            cliente.getUsuario().setUsername(dto.newUsername());;
+        } else {
+            throw new NotFoundException();
+        }
+    }
+
 
     @Override
     @Transactional

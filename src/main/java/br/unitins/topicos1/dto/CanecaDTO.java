@@ -13,4 +13,5 @@ public record CanecaDTO (
     Long id_tamanho, 
     Integer capacidade, 
     Integer id_material, 
-    Long id_fornecedor) { }
+    Long id_fornecedor,
+    Integer estoque) { }

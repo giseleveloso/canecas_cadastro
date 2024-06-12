@@ -11,7 +11,9 @@ public record CanecaResponseDTO
     TamanhoResponseDTO tamanho, 
     Integer capacidade, 
     Material material, 
-    FornecedorResponseDTO fornecedor){
+    FornecedorResponseDTO fornecedor,
+    String nomeImagem,
+    Integer estoque){
     public static CanecaResponseDTO valueOf(Caneca caneca) {
         return new  CanecaResponseDTO(
             caneca.getId(),
@@ -21,7 +23,10 @@ public record CanecaResponseDTO
             TamanhoResponseDTO.valueOf(caneca.getTamanho()),
             caneca.getCapacidade(),
             caneca.getMaterial(),
-            FornecedorResponseDTO.valueOf(caneca.getFornecedor()));
+            FornecedorResponseDTO.valueOf(caneca.getFornecedor()),
+            caneca.getNomeImagem(),
+            caneca.getEstoque()
+            );
         }
     
 }

@@ -12,5 +12,5 @@ public interface PedidoService {
     public PedidoResponseDTO findById(Long id);
     public List<PedidoResponseDTO> findAll();
     public List<PedidoResponseDTO> findByCliente(Long idCliente);
-
+    public void switchStatus(Long id);
 }

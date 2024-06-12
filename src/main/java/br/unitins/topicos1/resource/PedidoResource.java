@@ -5,6 +5,7 @@ import br.unitins.topicos1.service.PedidoService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -25,6 +26,13 @@ public class PedidoResource {
         return Response.ok(service.create(dto)).build();
     }
 
+    @PATCH
+    @Path("/switchStatus/{id}")
+    public Response switchStatus( @PathParam("id") Long id){
+        service.switchStatus(id);
+        return Response.noContent().build(); 
+    }
+
     @GET
     public Response findAll(){
         return Response.ok(service.findAll()).build();
@@ -36,6 +44,7 @@ public class PedidoResource {
         return Response.ok(service.findById(id)).build();
     }
 
+    @GET
     public Response findByCliente( @PathParam("idCliente") Long idCliente ){
         return Response.ok(service.findByCliente(idCliente)).build();
     }

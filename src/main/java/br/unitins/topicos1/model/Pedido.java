@@ -23,6 +23,17 @@ public class Pedido extends DefaultEntity {
     @JoinColumn(name = "id_pedido")
     private List<ItemPedido> itens;
 
+    private Pagamento formaPagamento;
+    private Status statusPagamento;
+
+    public Status getStatusPagamento() {
+        return statusPagamento;
+    }
+
+    public void setStatusPagamento(Status statusPagamento) {
+        this.statusPagamento = statusPagamento;
+    }
+
     public LocalDateTime getData() {
         return data;
     }
@@ -53,6 +64,14 @@ public class Pedido extends DefaultEntity {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public Pagamento getFormaPagamento() {
+        return formaPagamento;
+    }
+
+    public void setFormaPagamento(Pagamento formaPagamento) {
+        this.formaPagamento = formaPagamento;
     }
 
 }

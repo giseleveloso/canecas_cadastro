@@ -15,7 +15,7 @@ import static org.hamcrest.CoreMatchers.hasItem;
 public class CanecaResourceTest {
     @Test
     public void createTest(){
-        CanecaDTO dto = new CanecaDTO("Caneca Interior","Interior nas cores: azul, amarelo e rosa",40.50f,1L,320,1,2L);
+        CanecaDTO dto = new CanecaDTO("Caneca Interior","Interior nas cores: azul, amarelo e rosa",40.50f,1L,320,1,2L,10);
         given()
         .contentType(MediaType.APPLICATION_JSON)
         .body(dto)
@@ -49,7 +49,7 @@ public class CanecaResourceTest {
 
     @Test
     public void updateTest(){
-        CanecaDTO dto = new CanecaDTO("Caneca Totalmente Preta","Possui uma tarja branca para sublimação",60f,2L,320,2,1L);
+        CanecaDTO dto = new CanecaDTO("Caneca Totalmente Preta","Possui uma tarja branca para sublimação",60f,2L,320,2,1L,10);
         given()
         .contentType(MediaType.APPLICATION_JSON)
         .body(dto)

@@ -2,12 +2,15 @@ package br.unitins.topicos1.resource;
 
 
 import br.unitins.topicos1.dto.ClienteDTO;
+import br.unitins.topicos1.dto.ClienteUpdatePasswordDTO;
+import br.unitins.topicos1.dto.ClienteUpdateUsernameDTO;
 import br.unitins.topicos1.service.ClienteService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
@@ -52,6 +55,20 @@ public class ClienteResource {
     @Path("/{id}")
     public Response update(@PathParam("id") Long id, ClienteDTO dto) {
         clienteService.update(id, dto);
+        return Response.status(Status.NO_CONTENT).build();
+    }
+
+    @PATCH
+    @Path("/update-password/{id}")
+    public Response updateUsuarioSenha(@PathParam("id") Long id, ClienteUpdatePasswordDTO dto){
+        clienteService.updatePassword(id, dto);
+        return Response.status(Status.NO_CONTENT).build();
+    }
+
+    @PATCH
+    @Path("/update-username/{id}")
+    public Response updateUsuarioUsername(@PathParam("id") Long id, ClienteUpdateUsernameDTO dto){
+        clienteService.updateUsername(id, dto);
         return Response.status(Status.NO_CONTENT).build();
     }
 

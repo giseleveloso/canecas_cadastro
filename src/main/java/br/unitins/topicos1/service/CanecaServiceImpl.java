@@ -38,6 +38,7 @@ public class CanecaServiceImpl implements CanecaService {
         caneca.setCapacidade(dto.capacidade());
         caneca.setMaterial(Material.valueOf(dto.id_material()));
         caneca.setFornecedor(fornecedorRepository.findById(dto.id_fornecedor()));
+        caneca.setEstoque(dto.estoque());
 
         canecaRepository.persist(caneca);
         return CanecaResponseDTO.valueOf(caneca);
@@ -61,6 +62,7 @@ public class CanecaServiceImpl implements CanecaService {
         canecaBanco.setCapacidade(dto.capacidade());
         canecaBanco.setMaterial(Material.valueOf(dto.id_material()));
         canecaBanco.setFornecedor(fornecedorRepository.findById(dto.id_fornecedor()));
+        canecaBanco.setEstoque(dto.estoque());
     }
 
     @Override
