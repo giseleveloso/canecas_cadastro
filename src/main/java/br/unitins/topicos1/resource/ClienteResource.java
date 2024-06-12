@@ -2,8 +2,8 @@ package br.unitins.topicos1.resource;
 
 
 import br.unitins.topicos1.dto.ClienteDTO;
-import br.unitins.topicos1.dto.ClienteUpdatePasswordDTO;
-import br.unitins.topicos1.dto.ClienteUpdateUsernameDTO;
+import br.unitins.topicos1.dto.UpdatePasswordDTO;
+import br.unitins.topicos1.dto.UpdateUsernameDTO;
 import br.unitins.topicos1.service.ClienteService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -60,14 +60,14 @@ public class ClienteResource {
 
     @PATCH
     @Path("/update-password/{id}")
-    public Response updateUsuarioSenha(@PathParam("id") Long id, ClienteUpdatePasswordDTO dto){
+    public Response updateUsuarioSenha(@PathParam("id") Long id, UpdatePasswordDTO dto){
         clienteService.updatePassword(id, dto);
         return Response.status(Status.NO_CONTENT).build();
     }
 
     @PATCH
     @Path("/update-username/{id}")
-    public Response updateUsuarioUsername(@PathParam("id") Long id, ClienteUpdateUsernameDTO dto){
+    public Response updateUsuarioUsername(@PathParam("id") Long id, UpdateUsernameDTO dto){
         clienteService.updateUsername(id, dto);
         return Response.status(Status.NO_CONTENT).build();
     }

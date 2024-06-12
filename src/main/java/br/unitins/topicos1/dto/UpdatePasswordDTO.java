@@ -1,6 +1,6 @@
 package br.unitins.topicos1.dto;
 
-public record ClienteUpdatePasswordDTO(
+public record UpdatePasswordDTO(
     String oldPassword,
     String newPassword
 ) {

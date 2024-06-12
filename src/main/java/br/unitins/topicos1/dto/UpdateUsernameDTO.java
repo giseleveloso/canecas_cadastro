@@ -1,6 +1,6 @@
 package br.unitins.topicos1.dto;
 
-public record ClienteUpdateUsernameDTO(
+public record UpdateUsernameDTO(
     String newUsername
 ) {
     

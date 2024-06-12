@@ -4,8 +4,8 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.ClienteDTO;
 import br.unitins.topicos1.dto.ClienteResponseDTO;
-import br.unitins.topicos1.dto.ClienteUpdatePasswordDTO;
-import br.unitins.topicos1.dto.ClienteUpdateUsernameDTO;
+import br.unitins.topicos1.dto.UpdatePasswordDTO;
+import br.unitins.topicos1.dto.UpdateUsernameDTO;
 import br.unitins.topicos1.dto.UsuarioResponseDTO;
 import br.unitins.topicos1.model.Cliente;
 import br.unitins.topicos1.model.Usuario;
@@ -81,7 +81,7 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     @Transactional
-    public void updatePassword(Long id, ClienteUpdatePasswordDTO dto) {
+    public void updatePassword(Long id, UpdatePasswordDTO dto) {
 
         Cliente cliente = clienteRepository.findById(id);
         String hashSenhaAntiga = hashService.getHashSenha(dto.oldPassword());
@@ -100,7 +100,7 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     @Transactional
-    public void updateUsername(Long id, ClienteUpdateUsernameDTO dto) {
+    public void updateUsername(Long id, UpdateUsernameDTO dto) {
 
         Cliente cliente = clienteRepository.findById(id);
 

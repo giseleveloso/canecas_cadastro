@@ -4,7 +4,10 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.FuncionarioDTO;
 import br.unitins.topicos1.dto.FuncionarioResponseDTO;
+import br.unitins.topicos1.dto.UpdatePasswordDTO;
+import br.unitins.topicos1.dto.UpdateUsernameDTO;
 import br.unitins.topicos1.dto.UsuarioResponseDTO;
+import br.unitins.topicos1.model.Cliente;
 import br.unitins.topicos1.model.Funcionario;
 import br.unitins.topicos1.model.Usuario;
 import br.unitins.topicos1.repository.EnderecoRepository;
@@ -16,6 +19,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import jakarta.ws.rs.NotFoundException;
 
 @ApplicationScoped
 public class FuncionarioServiceImpl implements FuncionarioService {
@@ -73,7 +77,38 @@ public class FuncionarioServiceImpl implements FuncionarioService {
          funcionarioBanco.setEndereco(enderecoRepository.findById(dto.id_endereco()));
          funcionarioBanco.setTelefone(telefoneRepository.findById(dto.id_telefone()));
          funcionarioBanco.setEmail(dto.email());
+    }
 
+     @Override
+    @Transactional
+    public void updatePassword(Long id, UpdatePasswordDTO dto) {
+
+        Funcionario funcionario = funcionarioRepository.findById(id);
+        String hashSenhaAntiga = hashService.getHashSenha(dto.oldPassword());
+
+        if (funcionario != null) {
+            if (funcionario.getUsuario().getSenha().equals(hashSenhaAntiga)) {
+                String hashNovaSenha = hashService.getHashSenha(dto.newPassword());
+                funcionario.getUsuario().setSenha(hashNovaSenha);
+            } else {
+                throw new ValidationException("ERRO", "Senha antiga nao corresponde");
+            }
+        } else {
+            throw new NotFoundException();
+        }
+    }
+
+    @Override
+    @Transactional
+    public void updateUsername(Long id, UpdateUsernameDTO dto) {
+
+        Funcionario funcionario = funcionarioRepository.findById(id);
+
+        if (funcionario != null) {
+            funcionario.getUsuario().setUsername(dto.newUsername());;
+        } else {
+            throw new NotFoundException();
+        }
     }
 
     @Override
