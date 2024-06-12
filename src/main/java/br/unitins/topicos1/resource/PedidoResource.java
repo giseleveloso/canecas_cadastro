@@ -46,13 +46,14 @@ public class PedidoResource {
     }
 
     @GET
-    @Path("/search/cliente/id/{id}")
+    @Path("/search/id/{id}")
     public Response findById( @PathParam("id") Long id){
         LOG.infof("Executando o metodo findById. Id: %s", id.toString());
         return Response.ok(service.findById(id)).build();
     }
 
     @GET
+    @Path("/search/cliente/id/{id}")
     public Response findByCliente( @PathParam("idCliente") Long idCliente ){
         LOG.info("Executando o metodo findByCliente");
         return Response.ok(service.findByCliente(idCliente)).build();
