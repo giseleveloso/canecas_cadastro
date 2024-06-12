@@ -1,6 +1,8 @@
 package br.unitins.topicos1.resource;
 
 
+import org.jboss.logging.Logger;
+
 import br.unitins.topicos1.dto.FuncionarioDTO;
 import br.unitins.topicos1.dto.UpdatePasswordDTO;
 import br.unitins.topicos1.dto.UpdateUsernameDTO;
@@ -28,32 +30,46 @@ public class FuncionarioResource {
     @Inject
     public FuncionarioService funcionarioService;
 
+    private static final Logger LOG = Logger.getLogger(EnderecoResource.class);
+
+
     @GET
 
     @Path("/{id}")
     public Response findById(@PathParam("id") Long id) {
+        LOG.infof("Executando o metodo findById. Id: %s", id.toString());
         return Response.ok(funcionarioService.findById(id)).build();
     }
 
     @GET
     public Response findAll() {
+        LOG.info("Executando o findAll");
         return Response.ok(funcionarioService.findAll()).build();
     }
 
     @GET
     @Path("/search/nome/{nome}")
     public Response findByNome(@PathParam("nome") String nome) {
+        LOG.info("Executando o metodo findBynome");
         return Response.ok(funcionarioService.findByNome(nome)).build();
     }
 
     @POST
     public Response create(@Valid FuncionarioDTO dto) {
-        return Response.status(Status.CREATED).entity(funcionarioService.create(dto)).build();
-    }
+        LOG.info("Criando um novo funcionario");
+        try {
+            LOG.infof("Funcionario criado com sucesso. Nome: %d", dto.nome());
+            return Response.status(Status.CREATED).entity(funcionarioService.create(dto)).build();
+         }  catch (Exception e) {
+        LOG.error("Erro ao criar funcionario", e);
+            return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+        }
+     }
 
     @PUT
     @Path("/{id}")
     public Response update(@PathParam("id") Long id, FuncionarioDTO dto) {
+        LOG.debugf("DTO Atualizado: %s", dto);
         funcionarioService.update(id, dto);
         return Response.status(Status.NO_CONTENT).build();
     }
@@ -61,6 +77,7 @@ public class FuncionarioResource {
     @PATCH
     @Path("/update-password/{id}")
     public Response updateUsuarioSenha(@PathParam("id") Long id, UpdatePasswordDTO dto){
+        LOG.info("Atualizando senha");
         funcionarioService.updatePassword(id, dto);
         return Response.status(Status.NO_CONTENT).build();
     }
@@ -68,6 +85,7 @@ public class FuncionarioResource {
     @PATCH
     @Path("/update-username/{id}")
     public Response updateUsuarioUsername(@PathParam("id") Long id, UpdateUsernameDTO dto){
+        LOG.info("Atualizando username");
         funcionarioService.updateUsername(id, dto);
         return Response.status(Status.NO_CONTENT).build();
     }
@@ -75,6 +93,7 @@ public class FuncionarioResource {
     @DELETE
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
+        LOG.infof("Deletando funcionário. Id: %s", id.toString());
         funcionarioService.delete(id);
         return Response.status(Status.NO_CONTENT).build();
     }
