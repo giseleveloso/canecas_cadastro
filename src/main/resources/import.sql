@@ -23,10 +23,13 @@ insert into endereco (cep, rua, numero) values (77777888,'Rua Marcela',20);
 
 INSERT INTO usuario (username, senha) VALUES ('joao123', 'TRwn0XU29Gwl2sagG00bvjrNJvLuYo+dbOBJ7R3xFpU4m/FAUc5q8OoGbVNwPF7F5713RaYkN4qyufNCDHm/mA==');
 INSERT INTO usuario (username, senha) VALUES ('gigi', 'TRwn0XU29Gwl2sagG00bvjrNJvLuYo+dbOBJ7R3xFpU4m/FAUc5q8OoGbVNwPF7F5713RaYkN4qyufNCDHm/mA==');
+INSERT INTO usuario (username, senha) VALUES ('roberto', 'TRwn0XU29Gwl2sagG00bvjrNJvLuYo+dbOBJ7R3xFpU4m/FAUc5q8OoGbVNwPF7F5713RaYkN4qyufNCDHm/mA==');
+
 
 insert into funcionario (nome,cargo,id_endereco,id_telefone,email,id_usuario) values ('João','Vendedor',1,1,'joao@gmail.com',1);
 
 INSERT INTO cliente (nome, id_endereco, id_telefone, email, id_usuario)  VALUES ('Giovanna', 2, 2, 'giovanna@gmail.com', 2);
+INSERT INTO cliente (nome, id_endereco, id_telefone, email, id_usuario)  VALUES ('Roberto', 7, 7, 'roberto@gmail.com', 3);
 
 
 insert into fornecedor (nome,id_endereco,id_telefone,email) values ('José',6,6,'jose@gmail.com');

@@ -6,6 +6,7 @@ import jakarta.ws.rs.core.MediaType;
 
 import br.unitins.topicos1.dto.TelefoneDTO;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
@@ -14,8 +15,9 @@ import static org.hamcrest.CoreMatchers.hasItem;
 @QuarkusTest
 public class TelefoneResourceTest {
     @Test
+    @TestSecurity(user = "tester", roles = "Funcionario")
     public void createTest(){
-        TelefoneDTO dto = new TelefoneDTO("63", "999999999");
+        TelefoneDTO dto = new TelefoneDTO("77", "22233334456");
         given()
         .contentType(MediaType.APPLICATION_JSON)
         .body(dto)
@@ -23,9 +25,12 @@ public class TelefoneResourceTest {
         .post("/telefones")
         .then()
         .statusCode(201)
-        .body("codigoArea", is("63"));
+        .body("codigoArea", is("77"));
+        ;
+        
     }
     @Test
+    @TestSecurity(user = "tester", roles = "Funcionario")
     public void findAllTest(){
         given()
         .when()
@@ -36,6 +41,7 @@ public class TelefoneResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "tester", roles = "Funcionario")
     public void findByIdTest(){
         given()
         .when()
@@ -46,6 +52,7 @@ public class TelefoneResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "tester", roles = "Funcionario")
     public void updateTest(){
         TelefoneDTO dto = new TelefoneDTO("62", "111111111");
         given()
@@ -58,6 +65,7 @@ public class TelefoneResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "tester", roles = "Funcionario")
     public void deleteTest(){
         given()
         .when()

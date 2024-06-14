@@ -6,6 +6,7 @@ import jakarta.ws.rs.core.MediaType;
 
 import br.unitins.topicos1.dto.CanecaDTO;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
@@ -14,6 +15,7 @@ import static org.hamcrest.CoreMatchers.hasItem;
 @QuarkusTest
 public class CanecaResourceTest {
     @Test
+    @TestSecurity(user = "tester", roles = "Funcionario")
     public void createTest(){
         CanecaDTO dto = new CanecaDTO("Caneca Interior","Interior nas cores: azul, amarelo e rosa",40.50f,1L,320,1,2L,10);
         given()
@@ -27,6 +29,7 @@ public class CanecaResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "tester", roles = "Funcionario")
     public void findByIdTest(){
         given()
         .when()
@@ -37,6 +40,7 @@ public class CanecaResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "tester", roles = "Funcionario")
     public void findByNomeTest(){
         given()
         .when()
@@ -48,6 +52,7 @@ public class CanecaResourceTest {
 
 
     @Test
+    @TestSecurity(user = "tester", roles = "Funcionario")
     public void updateTest(){
         CanecaDTO dto = new CanecaDTO("Caneca Totalmente Preta","Possui uma tarja branca para sublimação",60f,2L,320,2,1L,10);
         given()
@@ -60,6 +65,7 @@ public class CanecaResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "tester", roles = "Funcionario")
     public void findAllTest(){
         given()
         .when()
@@ -70,6 +76,7 @@ public class CanecaResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "tester", roles = "Funcionario")
     public void deleteTest(){
         given()
         .when()

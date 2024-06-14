@@ -6,6 +6,7 @@ import jakarta.ws.rs.core.MediaType;
 
 import br.unitins.topicos1.dto.FornecedorDTO;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
@@ -14,6 +15,7 @@ import static org.hamcrest.CoreMatchers.hasItem;
 @QuarkusTest
 public class FornecedorResourceTest {
     @Test
+    @TestSecurity(user = "tester", roles = "Funcionario")
     public void createTest(){
         FornecedorDTO dto = new FornecedorDTO("Marcela",8L,8L,"teresa@gmail.com");
         given()
@@ -27,6 +29,7 @@ public class FornecedorResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "tester", roles = "Funcionario")
     public void findByIdTest(){
         given()
         .when()
@@ -37,6 +40,7 @@ public class FornecedorResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "tester", roles = "Funcionario")
     public void findByNomeTest(){
         given()
         .when()
@@ -47,6 +51,7 @@ public class FornecedorResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "tester", roles = "Funcionario")
     public void updateTest(){
         FornecedorDTO dto = new FornecedorDTO("Gisele de Oliveira",7L,7L,"leandra@gmail.com");
         given()
@@ -59,6 +64,7 @@ public class FornecedorResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "tester", roles = "Funcionario")
     public void findAllTest(){
         given()
         .when()
@@ -69,6 +75,7 @@ public class FornecedorResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "tester", roles = "Funcionario")
     public void deleteTest(){
         given()
         .when()

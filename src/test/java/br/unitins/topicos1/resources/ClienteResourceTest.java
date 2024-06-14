@@ -6,6 +6,7 @@ import jakarta.ws.rs.core.MediaType;
 
 import br.unitins.topicos1.dto.ClienteDTO;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.security.TestSecurity;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
@@ -14,8 +15,9 @@ import static org.hamcrest.CoreMatchers.hasItem;
 @QuarkusTest
 public class ClienteResourceTest {
     @Test
+    @TestSecurity(user = "tester", roles = "Funcionario")
     public void createTest(){
-        ClienteDTO dto = new ClienteDTO("Teresa",5L,5L,"teresa@gmail.com","ter123","111");
+        ClienteDTO dto = new ClienteDTO("Teresa",5L,5L,"teresa@gmail.com","ter123","123");
         given()
         .contentType(MediaType.APPLICATION_JSON)
         .body(dto)
@@ -27,6 +29,7 @@ public class ClienteResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "tester", roles = "Funcionario")
     public void findByIdTest(){
         given()
         .when()
@@ -37,6 +40,7 @@ public class ClienteResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "tester", roles = "Funcionario")
     public void findByNomeTest(){
         given()
         .when()
@@ -47,32 +51,35 @@ public class ClienteResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "tester", roles = "Funcionario")
     public void updateTest(){
-        ClienteDTO dto = new ClienteDTO("Mário",4L,4L,"leandra@gmail.com","user333","leandrinha");
+        ClienteDTO dto = new ClienteDTO("Teresas",5L,5L,"teresa@gmail.com","tere123","123");
         given()
         .contentType(MediaType.APPLICATION_JSON)
         .body(dto)
         .when()
-        .put("/clientes/2")
+        .put("/clientes/3")
         .then()
         .statusCode(204);
     }
 
     @Test
+    @TestSecurity(user = "tester", roles = "Funcionario")
     public void findAllTest(){
         given()
         .when()
         .get("/clientes")
         .then()
         .statusCode(200)
-        .body("nome", hasItem(is("Mário")));;
+        .body("nome", hasItem(is("Giovanna")));;
     }
 
     @Test
+    @TestSecurity(user = "tester", roles = "Funcionario")
     public void deleteTest(){
         given()
         .when()
-        .pathParam("id", 3)
+        .pathParam("id", 4)
         .delete("/clientes/{id}")
         .then()
         .statusCode(204);

@@ -57,14 +57,14 @@ public class ClienteResource {
     }
 
     @POST
-    @RolesAllowed("Funcionario")
+    @RolesAllowed({"Funcionario","Cliente"})
     public Response create(@Valid ClienteDTO dto) {
         LOG.info("Criando um novo cliente");
         return Response.status(Status.CREATED).entity(clienteService.create(dto)).build();
     }
 
     @PUT
-    @RolesAllowed("Funcionario")
+    @RolesAllowed({"Funcionario","Cliente"})
     @Path("/{id}")
     public Response update(@PathParam("id") Long id, ClienteDTO dto) {
         LOG.debugf("DTO Atualizado: %s", dto);
