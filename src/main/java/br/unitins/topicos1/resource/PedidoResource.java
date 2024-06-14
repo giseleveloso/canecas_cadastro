@@ -4,6 +4,7 @@ import org.jboss.logging.Logger;
 
 import br.unitins.topicos1.dto.PedidoDTO;
 import br.unitins.topicos1.service.PedidoService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -26,12 +27,14 @@ public class PedidoResource {
     private static final Logger LOG = Logger.getLogger(EnderecoResource.class);
 
     @POST
+    @RolesAllowed("Cliente")
     public Response create(PedidoDTO dto){
         LOG.info("Criando um pedido");
         return Response.ok(service.create(dto)).build();
     }
 
     @PATCH
+    @RolesAllowed("Funcionario")
     @Path("/switchStatus/{id}")
     public Response switchStatus( @PathParam("id") Long id){
         LOG.info("Trocando o status de pagamento do pedido");
@@ -40,12 +43,15 @@ public class PedidoResource {
     }
 
     @GET
+    
+    @RolesAllowed("Funcionario")
     public Response findAll(){
         LOG.info("Executando o findAll");
         return Response.ok(service.findAll()).build();
     }
 
     @GET
+    @RolesAllowed("Funcionario")
     @Path("/search/id/{id}")
     public Response findById( @PathParam("id") Long id){
         LOG.infof("Executando o metodo findById. Id: %s", id.toString());
@@ -53,8 +59,9 @@ public class PedidoResource {
     }
 
     @GET
-    @Path("/search/cliente/id/{id}")
-    public Response findByCliente( @PathParam("idCliente") Long idCliente ){
+    @RolesAllowed("Funcionario")
+    @Path("/search/cliente/id/{id_cliente}")
+    public Response findByCliente( @PathParam("id_cliente") Long idCliente ){
         LOG.info("Executando o metodo findByCliente");
         return Response.ok(service.findByCliente(idCliente)).build();
     }

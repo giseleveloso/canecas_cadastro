@@ -3,6 +3,7 @@ package br.unitins.topicos1.resource;
 import org.jboss.logging.Logger;
 import br.unitins.topicos1.dto.EnderecoDTO;
 import br.unitins.topicos1.service.EnderecoService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -27,7 +28,7 @@ public class EnderecoResource {
     private static final Logger LOG = Logger.getLogger(EnderecoResource.class);
 
     @GET
-
+    @RolesAllowed("Funcionario")
     @Path("/{id}")
     public Response findById(@PathParam("id") Long id) {
         LOG.info("Executando o findById");
@@ -36,12 +37,14 @@ public class EnderecoResource {
     }
 
     @GET
+    @RolesAllowed("Funcionario")
     public Response findAll() {
         LOG.info("Executando o findAll");
         return Response.ok(enderecoService.findAll()).build();
     }
 
     @POST
+    @RolesAllowed({"Funcionario", "Cliente"})
     public Response create(@Valid EnderecoDTO dto) {
     LOG.info("Criando um novo endereço");
     try {
@@ -66,6 +69,7 @@ public class EnderecoResource {
     */
 
     @PUT
+    @RolesAllowed({"Funcionario", "Cliente"})
     @Path("/{id}")
     public Response update(@PathParam("id") Long id, EnderecoDTO dto) {
         LOG.debugf("DTO Atualizado: %s", dto);
@@ -74,6 +78,7 @@ public class EnderecoResource {
     }
 
     @DELETE
+    @RolesAllowed({"Funcionario", "Cliente"})
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
         LOG.infof("Deletando endereço. Id: %s", id.toString());

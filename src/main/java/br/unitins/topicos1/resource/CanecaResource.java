@@ -8,6 +8,7 @@ import br.unitins.topicos1.dto.CanecaDTO;
 import br.unitins.topicos1.form.ImageForm;
 import br.unitins.topicos1.service.CanecaFileServiceImpl;
 import br.unitins.topicos1.service.CanecaService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -39,7 +40,7 @@ public class CanecaResource {
 
 
     @GET
-
+    @RolesAllowed("Funcionario")
     @Path("/{id}")
     public Response findById(@PathParam("id") Long id) {
         LOG.infof("Executando o metodo findById. Id: %s", id.toString());
@@ -47,12 +48,14 @@ public class CanecaResource {
     }
 
     @GET
+    @RolesAllowed({"Funcionario", "Cliente"})
     public Response findAll() {
         LOG.info("Executando o findAll");
         return Response.ok(canecaService.findAll()).build();
     }
 
     @GET
+    @RolesAllowed("Funcionario")
     @Path("/search/nome/{nome}")
     public Response findByNome(@PathParam("nome") String nome) {
         LOG.info("Executando o metodo findBynome");
@@ -60,6 +63,7 @@ public class CanecaResource {
     }
 
     @POST
+    @RolesAllowed("Funcionario")
     public Response create(@Valid CanecaDTO dto) {
         LOG.info("Criando uma nova caneca");
         try {
@@ -71,6 +75,7 @@ public class CanecaResource {
         }    }
 
     @PUT
+    @RolesAllowed("Funcionario")
     @Path("/{id}")
     public Response update(@PathParam("id") Long id, CanecaDTO dto) {
         LOG.debugf("DTO Atualizado: %s", dto);
@@ -79,6 +84,7 @@ public class CanecaResource {
     }
 
     @DELETE
+    @RolesAllowed("Funcionario")
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
         LOG.infof("Deletando caneca. Id: %s", id.toString());
@@ -87,6 +93,7 @@ public class CanecaResource {
     }
 
     @PATCH
+    @RolesAllowed("Funcionario")
     @Path("/{id}/image/upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response upload(@PathParam("id") Long id, @MultipartForm ImageForm form) {
@@ -96,6 +103,7 @@ public class CanecaResource {
     }
 
     @GET
+    @RolesAllowed("Funcionario")
     @Path("/image/download/{nomeImagem}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response download(@PathParam("nomeImagem") String nomeImagem) {

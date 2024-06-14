@@ -3,6 +3,7 @@ package br.unitins.topicos1.service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import br.unitins.topicos1.dto.ItemPedidoDTO;
 import br.unitins.topicos1.dto.PedidoDTO;
@@ -104,9 +105,19 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Override
     public List<PedidoResponseDTO> findByCliente(Long idCliente) {
+        return pedidoRepository.findByCliente(idCliente)
+                .stream()
+                .map(PedidoResponseDTO::valueOf)
+                .collect(Collectors.toList());
+    }
+
+/*
+    @Override
+    public List<PedidoResponseDTO> findByCliente(Long idCliente) {
         return pedidoRepository.findByCliente(idCliente).stream()
         .map(e -> PedidoResponseDTO.valueOf(e)).toList();
     }
+*/
 
     @Override
     @Transactional

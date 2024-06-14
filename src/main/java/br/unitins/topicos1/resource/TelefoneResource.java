@@ -5,6 +5,7 @@ import org.jboss.logging.Logger;
 
 import br.unitins.topicos1.dto.TelefoneDTO;
 import br.unitins.topicos1.service.TelefoneService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -31,7 +32,7 @@ public class TelefoneResource {
 
 
     @GET
-
+    @RolesAllowed("Funcionario")
     @Path("/{id}")
     public Response findById(@PathParam("id") Long id) {
         LOG.infof("Executando o metodo findById. Id: %s", id.toString());
@@ -39,12 +40,14 @@ public class TelefoneResource {
     }
 
     @GET
+    @RolesAllowed("Funcionario")
     public Response findAll() {
         LOG.info("Executando o findAll");
         return Response.ok(telefoneService.findAll()).build();
     }
 
     @POST
+    @RolesAllowed({"Funcionario","Cliente"})
     public Response create(@Valid TelefoneDTO dto) {
         LOG.info("Criando um novo telefone");
         try {
@@ -57,6 +60,7 @@ public class TelefoneResource {
     }
 
     @PUT
+    @RolesAllowed({"Funcionario","Cliente"})
     @Path("/{id}")
     public Response update(@PathParam("id") Long id, TelefoneDTO dto) {
         LOG.debugf("DTO Atualizado: %s", dto);
@@ -65,6 +69,7 @@ public class TelefoneResource {
     }
 
     @DELETE
+    @RolesAllowed({"Funcionario","Cliente"})
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
         LOG.infof("Deletando telefone. Id: %s", id.toString());

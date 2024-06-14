@@ -5,6 +5,7 @@ import org.jboss.logging.Logger;
 
 import br.unitins.topicos1.dto.FornecedorDTO;
 import br.unitins.topicos1.service.FornecedorService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -29,7 +30,7 @@ public class FornecedorResource {
     private static final Logger LOG = Logger.getLogger(EnderecoResource.class);
 
     @GET
-
+    @RolesAllowed("Funcionario")
     @Path("/{id}")
     public Response findById(@PathParam("id") Long id) {
         LOG.infof("Executando o metodo findById. Id: %s", id.toString());
@@ -37,12 +38,14 @@ public class FornecedorResource {
     }
 
     @GET
+    @RolesAllowed("Funcionario")
     public Response findAll() {
         LOG.info("Executando o findAll");
         return Response.ok(fornecedorService.findAll()).build();
     }
 
     @GET
+    @RolesAllowed("Funcionario")
     @Path("/search/nome/{nome}")
     public Response findByNome(@PathParam("nome") String nome) {
         LOG.info("Executando o metodo findBynome");
@@ -50,6 +53,7 @@ public class FornecedorResource {
     }
 
     @POST
+    @RolesAllowed("Funcionario")
     public Response create(@Valid FornecedorDTO dto) {
         LOG.info("Criando um novo fornecedor");
         try {
@@ -62,6 +66,7 @@ public class FornecedorResource {
     }
 
     @PUT
+    @RolesAllowed("Funcionario")
     @Path("/{id}")
     public Response update(@PathParam("id") Long id, FornecedorDTO dto) {
         LOG.debugf("DTO Atualizado: %s", dto);
@@ -70,6 +75,7 @@ public class FornecedorResource {
     }
 
     @DELETE
+    @RolesAllowed("Funcionario")
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
         LOG.infof("Deletando fornecedor. Id: %s", id.toString());

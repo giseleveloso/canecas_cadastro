@@ -32,7 +32,7 @@ public class TamanhoResource {
 
 
     @GET
-
+    @RolesAllowed({"Funcionario", "Cliente"})
     @Path("/{id}")
     public Response findById(@PathParam("id") Long id) {
         LOG.infof("Executando o metodo findById. Id: %s", id.toString());
@@ -40,6 +40,7 @@ public class TamanhoResource {
     }
 
     @GET
+    @RolesAllowed({"Funcionario", "Cliente"})
     public Response findAll() {
         LOG.info("Executando o findAll");
         return Response.ok(tamanhoService.findAll()).build();

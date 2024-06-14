@@ -7,6 +7,7 @@ import br.unitins.topicos1.dto.FuncionarioDTO;
 import br.unitins.topicos1.dto.UpdatePasswordDTO;
 import br.unitins.topicos1.dto.UpdateUsernameDTO;
 import br.unitins.topicos1.service.FuncionarioService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -34,7 +35,7 @@ public class FuncionarioResource {
 
 
     @GET
-
+    @RolesAllowed("Funcionario")
     @Path("/{id}")
     public Response findById(@PathParam("id") Long id) {
         LOG.infof("Executando o metodo findById. Id: %s", id.toString());
@@ -42,12 +43,14 @@ public class FuncionarioResource {
     }
 
     @GET
+    @RolesAllowed("Funcionario")
     public Response findAll() {
         LOG.info("Executando o findAll");
         return Response.ok(funcionarioService.findAll()).build();
     }
 
     @GET
+    @RolesAllowed("Funcionario")
     @Path("/search/nome/{nome}")
     public Response findByNome(@PathParam("nome") String nome) {
         LOG.info("Executando o metodo findBynome");
@@ -55,6 +58,7 @@ public class FuncionarioResource {
     }
 
     @POST
+    @RolesAllowed("Funcionario")
     public Response create(@Valid FuncionarioDTO dto) {
         LOG.info("Criando um novo funcionario");
         try {
@@ -67,6 +71,7 @@ public class FuncionarioResource {
      }
 
     @PUT
+    @RolesAllowed("Funcionario")
     @Path("/{id}")
     public Response update(@PathParam("id") Long id, FuncionarioDTO dto) {
         LOG.debugf("DTO Atualizado: %s", dto);
@@ -75,6 +80,7 @@ public class FuncionarioResource {
     }
 
     @PATCH
+    @RolesAllowed("Funcionario")
     @Path("/update-password/{id}")
     public Response updateUsuarioSenha(@PathParam("id") Long id, UpdatePasswordDTO dto){
         LOG.info("Atualizando senha");
@@ -83,6 +89,7 @@ public class FuncionarioResource {
     }
 
     @PATCH
+    @RolesAllowed("Funcionario")
     @Path("/update-username/{id}")
     public Response updateUsuarioUsername(@PathParam("id") Long id, UpdateUsernameDTO dto){
         LOG.info("Atualizando username");
@@ -91,6 +98,7 @@ public class FuncionarioResource {
     }
 
     @DELETE
+    @RolesAllowed("Funcionario")
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
         LOG.infof("Deletando funcionário. Id: %s", id.toString());
