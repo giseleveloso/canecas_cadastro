@@ -53,12 +53,12 @@ public class ClienteResourceTest {
     @Test
     @TestSecurity(user = "tester", roles = "Funcionario")
     public void updateTest(){
-        ClienteDTO dto = new ClienteDTO("Teresas",5L,5L,"teresa@gmail.com","tere123","123");
+        ClienteDTO dto = new ClienteDTO("ROBERTO",8L,8L,"teresa@gmail.com","roberto","123");
         given()
         .contentType(MediaType.APPLICATION_JSON)
         .body(dto)
         .when()
-        .put("/clientes/3")
+        .put("/clientes/2")
         .then()
         .statusCode(204);
     }
